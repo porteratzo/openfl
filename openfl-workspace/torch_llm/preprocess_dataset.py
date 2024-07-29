@@ -19,8 +19,8 @@ def xml_to_json(input_base_folder, subfolders, output_folder, verify_hash=1):
 
     if verify_hash == 1:
         expected_hash = (
-            "a36491e9ca607c7805058811b18df787356f48ee59f050a259a"
-            "6e4619771e1086ea5cc4e6d45c246a1d478754253acdb"
+            "bea3726c783b041bef8d19a6b8ad9e26e1d1a838e3d554"
+            "586aaed700cfb25b2d6bf78a999e9fbca7c63160e8a8a62a05"
         )
         verify_aggregated_hashes(
             input_base_folder, subfolders, expected_hash=expected_hash
@@ -110,6 +110,7 @@ def verify_aggregated_hashes(input_base_folder, dir_list, expected_hash):
         directory = os.path.join(input_base_folder, sub_directory)
         if os.path.isdir(directory):
             for root, _, files in os.walk(directory):
+                files.sort()
                 for file in files:
                     file_path = os.path.join(root, file)
                     file_hash = compute_hash(file_path)
@@ -124,6 +125,7 @@ def verify_aggregated_hashes(input_base_folder, dir_list, expected_hash):
     if aggregated_hash != expected_hash:
         raise SystemError(
             "Verification failed. Downloaded hash doesn't match expected hash."
+            f"Expected: {expected_hash}, Obtained: {aggregated_hash}"
         )
     else:
         print("Verification passed")

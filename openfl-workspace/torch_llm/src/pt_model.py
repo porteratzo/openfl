@@ -42,7 +42,8 @@ class LLMTaskRunner(PyTorchTaskRunner):
         self.base_model_name = base_model_name
         self.kwargs = kwargs
         self.model, self.peft_config = _init_model(base_model_name, device)
-        self.training_config = _init_configs()
+        self.training_config = _init_configs(
+            batch_size=data_loader.batch_size, **kwargs)
         self.optimizer, self.lr_scheduler = _init_optimizer(
             self.model,
             training_args=SFTConfig(**self.training_config),
@@ -82,7 +83,8 @@ class LLMTaskRunner(PyTorchTaskRunner):
             packing=False
         )
         train_out = trainer.train()
-        self.optimizer, self.lr_scheduler = trainer.optimizer, trainer.lr_scheduler
+        self.optimizer, self.lr_scheduler = (trainer.optimizer,
+                                             trainer.lr_scheduler)
         return Metric(
             name="CrossEntropyLoss",
             value=np.array(train_out.metrics["train_loss"]),

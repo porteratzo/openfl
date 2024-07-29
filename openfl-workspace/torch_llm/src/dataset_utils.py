@@ -86,7 +86,6 @@ def preprocess_dataset(
             num_proc=1,
             remove_columns=column_names,
         )
-        .select(range(4))
     )
     processed_test_dataset = (
         dataset_train_test["test"]
@@ -97,7 +96,6 @@ def preprocess_dataset(
             num_proc=1,
             remove_columns=column_names,
         )
-        .select(range(4))
     )
     return processed_train_dataset, processed_test_dataset, tokenizer
 

@@ -104,11 +104,11 @@ def _init_optimizer(opt_model, training_args):
     return optimizer, lr_scheduler
 
 
-def _init_configs():
+def _init_configs(**kwargs):
     training_config = {
         "bf16": True,
         "use_ipex": False,
-        "use_cpu": True,
+        "use_cpu": kwargs.get('use_cpu', False),
         "do_eval": False,
         "learning_rate": 5.0e-06,
         "log_level": "info",
@@ -119,8 +119,8 @@ def _init_configs():
         "max_steps": -1,
         "output_dir": "./checkpoint_dir",
         "overwrite_output_dir": True,
-        "per_device_eval_batch_size": 1,
-        "per_device_train_batch_size": 1,
+        "per_device_eval_batch_size": kwargs.get('batch_size', 1),
+        "per_device_train_batch_size": kwargs.get('batch_size', 1),
         "remove_unused_columns": True,
         "save_steps": 100,
         "save_total_limit": 1,
