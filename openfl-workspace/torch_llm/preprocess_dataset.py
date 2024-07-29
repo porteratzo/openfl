@@ -19,8 +19,7 @@ def xml_to_json(input_base_folder, subfolders, output_folder, verify_hash=1):
 
     if verify_hash == 1:
         expected_hash = (
-            "bea3726c783b041bef8d19a6b8ad9e26e1d1a838e3d554"
-            "586aaed700cfb25b2d6bf78a999e9fbca7c63160e8a8a62a05"
+            "2c56d5cf266805c31447c30dd6b035b7f9a3f3a1ed0aaf1b7579a4b7ba2d1979b0e31951b014871911dee29d14fbf070"
         )
         verify_aggregated_hashes(
             input_base_folder, subfolders, expected_hash=expected_hash
