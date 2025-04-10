@@ -7,6 +7,7 @@ from openfl.federated import KerasDataLoader
 import numpy as np
 from sklearn.model_selection import train_test_split
 from glob import glob
+import os
 
 
 class KerasHippmapp3rsynth(KerasDataLoader):
@@ -21,6 +22,9 @@ class KerasHippmapp3rsynth(KerasDataLoader):
             batch_size (int): The batch size for the data loader
             **kwargs: Additional arguments, passed to super init and load_mnist_shard
         """
+        if not os.path.exists(data_path):
+            raise FileNotFoundError(f"Data path '{data_path}' does not exist.")
+        
         super().__init__(batch_size, **kwargs)
 
         X_train = glob(f"{data_path}/X*.npy")

@@ -13,6 +13,15 @@ import hashlib
 
 MODEL_JSON_HASH = "c35cfa990000ad87825f182460395ec5d1437a707bd33de4df55d45664e94214"
 MODEL_WEIGHTS_HASH = "cd5e52d42e2c6d737e370fb0e673aec5d257134e127c0e59478f11676fa327a5"
+import tensorflow as tf
+
+gpus = tf.config.list_physical_devices('GPU')
+if gpus:
+    # Check if the GPU supports mixed precision
+    gpu_details = tf.config.experimental.get_device_details(gpus[0])
+    if 'compute_capability' in gpu_details and gpu_details['compute_capability'] >= (7, 0):
+        # Enable mixed precision
+        tf.keras.mixed_precision.set_global_policy('mixed_float16')
 
 
 def dice_coefficient(y_true, y_pred, smooth=1.0):
